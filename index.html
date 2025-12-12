@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدرس شیمی کنکور | سیستم کامل آموزشی با رفع اشکال</title>
+    <title>مدرس شیمی کنکور | سیستم کامل آموزشی</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap">
     <style>
@@ -83,7 +83,7 @@
         }
 
         .nav-links li {
-            margin-right: 20px;
+            margin-right: 15px;
         }
 
         .nav-links a {
@@ -93,26 +93,11 @@
             transition: var(--transition);
             position: relative;
             padding: 5px 0;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .nav-links a:hover {
             color: var(--accent-blue);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent-blue);
-            bottom: 0;
-            left: 0;
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
         }
 
         .mobile-menu-btn {
@@ -122,6 +107,17 @@
             border: none;
             color: var(--text-primary);
             cursor: pointer;
+        }
+
+        /* صفحات */
+        .page {
+            display: none;
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
         }
 
         /* صفحه اصلی - درباره من */
@@ -153,42 +149,7 @@
             box-shadow: 0 10px 30px rgba(100, 255, 218, 0.3);
         }
 
-        .teacher-info {
-            max-width: 600px;
-            text-align: right;
-        }
-
-        .teacher-info h2 {
-            color: var(--accent-blue);
-            margin-bottom: 20px;
-            font-size: 2.2rem;
-        }
-
-        .teacher-info p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-
-        .achievements {
-            display: flex;
-            gap: 20px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .achievement {
-            background-color: rgba(100, 255, 218, 0.1);
-            padding: 15px 25px;
-            border-radius: 10px;
-            border-right: 3px solid var(--accent-purple);
-        }
-
         /* بخش‌های اصلی */
-        section {
-            padding: 70px 0;
-        }
-
         .section-title {
             font-size: 2rem;
             color: var(--accent-blue);
@@ -206,310 +167,282 @@
             margin: 10px auto;
         }
 
-        /* محاسبه جرم مولی تمام عناصر */
-        .all-elements-calculator {
-            background-color: var(--deep-blue);
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 40px;
-        }
-
-        .elements-grid {
+        /* کارت‌های عمومی */
+        .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
         }
 
-        .element-item {
+        .card {
+            background-color: var(--deep-blue);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            height: 180px;
             background-color: var(--light-blue);
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .element-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
-        }
-
-        .element-symbol {
-            font-size: 1.5rem;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
             color: var(--accent-blue);
-            margin-bottom: 5px;
         }
 
-        .element-details {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* جدول تناوبی عناصر ۱ تا ۳۶ */
-        .full-periodic-table {
-            background-color: var(--deep-blue);
-            border-radius: 10px;
+        .card-content {
             padding: 25px;
-            margin-bottom: 30px;
-            overflow-x: auto;
         }
 
-        .table-container {
-            display: grid;
-            grid-template-columns: repeat(18, 1fr);
-            gap: 4px;
+        .card-content h3 {
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .card-content p {
+            color: var(--text-secondary);
             margin-bottom: 20px;
-            min-width: 1200px;
         }
 
-        .periodic-element {
-            border-radius: 5px;
-            padding: 12px 5px;
-            text-align: center;
-            font-size: 0.8rem;
-            transition: var(--transition);
-            cursor: pointer;
-            min-height: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .periodic-element:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 15px rgba(100, 255, 218, 0.7);
-            z-index: 10;
-        }
-
-        .element-image {
-            width: 30px;
-            height: 30px;
-            margin: 0 auto 5px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            color: var(--text-primary);
-        }
-
-        /* رنگ‌بندی گروه‌های جدول تناوبی */
-        .alkali-metal { background-color: #ff6b6b; }
-        .alkaline-earth { background-color: #ffa726; }
-        .transition-metal { background-color: #42a5f5; }
-        .basic-metal { background-color: #66bb6a; }
-        .metalloid { background-color: #ab47bc; }
-        .nonmetal { background-color: #5c6bc0; }
-        .halogen { background-color: #ffca28; color: #000; }
-        .noble-gas { background-color: #26c6da; }
-
-        /* واکنش‌های مهم شیمی */
-        .important-reactions {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-        }
-
-        .reaction-card {
-            background-color: var(--deep-blue);
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: var(--transition);
-            border-top: 4px solid var(--accent-green);
-        }
-
-        .reaction-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .reaction-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .reaction-equation {
-            font-family: monospace;
-            font-size: 1.8rem;
-            color: var(--accent-yellow);
-            background-color: rgba(255, 212, 59, 0.1);
-            padding: 10px 15px;
-            border-radius: 8px;
-            text-align: center;
-            margin: 15px 0;
-        }
-
-        .reaction-details {
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-
-        .reaction-type {
+        .btn {
             display: inline-block;
             background-color: var(--accent-purple);
             color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            margin-top: 10px;
-        }
-
-        /* رفع اشکال */
-        .help-section {
-            background-color: var(--deep-blue);
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 40px;
-        }
-
-        .help-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--accent-blue);
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
             font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 15px;
-            background-color: var(--light-blue);
-            border: none;
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 1rem;
             transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--accent-blue);
-        }
-
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            background-color: var(--accent-purple);
-            color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-size: 1.1rem;
             cursor: pointer;
-            transition: var(--transition);
-            display: block;
-            width: 100%;
         }
 
-        .submit-btn:hover {
+        .btn:hover {
             background-color: var(--accent-blue);
             color: var(--deep-blue);
         }
 
-        .help-info {
-            background-color: rgba(100, 255, 218, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-            border-right: 3px solid var(--accent-blue);
-        }
-
-        /* نتایج دانش‌آموزان */
-        .results-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .result-card {
-            background-color: var(--deep-blue);
-            border-radius: 10px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: var(--transition);
-            border-top: 4px solid var(--accent-purple);
-        }
-
-        .result-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        /* نمونه جزوه */
+        /* صفحه جزوات */
         .handouts-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
         }
 
         .handout-card {
             background-color: var(--deep-blue);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             transition: var(--transition);
         }
 
         .handout-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
-        /* اطلاعات تماس */
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
+        .handout-header {
+            height: 200px;
             background-color: var(--light-blue);
-            padding: 20px;
-            border-radius: 8px;
-            transition: var(--transition);
-        }
-
-        .contact-item:hover {
-            background-color: rgba(100, 255, 218, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .contact-icon {
-            background-color: var(--deep-blue);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: 20px;
-            font-size: 1.5rem;
+            font-size: 5rem;
             color: var(--accent-blue);
+        }
+
+        .handout-content {
+            padding: 25px;
+        }
+
+        .handout-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* صفحه نمونه سوالات */
+        .questions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .question-card {
+            background-color: var(--deep-blue);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            border-top: 4px solid var(--accent-green);
+        }
+
+        .question-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* صفحه آزمون آنلاین */
+        .quiz-container {
+            background-color: var(--deep-blue);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--light-blue);
+        }
+
+        .question-box {
+            background-color: var(--light-blue);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background-color: var(--deep-blue);
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .option.selected {
+            background-color: rgba(100, 255, 218, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .result-box {
+            display: none;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--midnight-blue) 100%);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 50px;
+            border: 2px solid var(--accent-blue);
+        }
+
+        /* صفحه ویدیوهای آموزشی */
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .video-card {
+            background-color: var(--deep-blue);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-placeholder {
+            height: 220px;
+            background-color: var(--light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--accent-red);
+        }
+
+        .video-content {
+            padding: 25px;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* صفحه عکس کلاس‌ها */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            background-color: var(--deep-blue);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-image {
+            height: 250px;
+            background-color: var(--light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--accent-yellow);
+        }
+
+        .gallery-caption {
+            padding: 20px;
+            text-align: center;
         }
 
         /* فوتر */
@@ -517,6 +450,7 @@
             background-color: var(--deep-blue);
             padding: 50px 0 20px;
             border-top: 1px solid var(--light-blue);
+            margin-top: 50px;
         }
 
         .social-links {
@@ -554,18 +488,14 @@
             border-top: 1px solid rgba(136, 146, 176, 0.2);
         }
 
-        /* پیمایش داخلی */
-        .section-anchor {
-            display: block;
-            position: relative;
-            top: -80px;
-            visibility: hidden;
-        }
-
         /* رسپانسیو */
         @media (max-width: 1200px) {
-            .table-container {
-                grid-template-columns: repeat(9, 1fr);
+            .nav-links li {
+                margin-right: 10px;
+            }
+            
+            .nav-links a {
+                font-size: 0.8rem;
             }
         }
 
@@ -575,12 +505,12 @@
                 text-align: center;
             }
             
-            .teacher-info {
-                text-align: center;
-            }
-            
-            .table-container {
-                grid-template-columns: repeat(9, 1fr);
+            .card-grid,
+            .handouts-container,
+            .questions-container,
+            .videos-container,
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             }
         }
 
@@ -611,11 +541,17 @@
                 display: block;
             }
             
-            .table-container {
-                grid-template-columns: repeat(6, 1fr);
+            .quiz-container,
+            .result-box {
+                padding: 20px;
             }
             
-            .important-reactions {
+            .quiz-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .options-container {
                 grid-template-columns: 1fr;
             }
         }
@@ -631,13 +567,13 @@
                     شیمی‌<span>پژوه</span>
                 </div>
                 <ul class="nav-links">
-                    <li><a href="#home">خانه</a></li>
-                    <li><a href="#about">درباره من</a></li>
-                    <li><a href="#calculator">جرم مولی</a></li>
-                    <li><a href="#periodic">جدول تناوبی</a></li>
-                    <li><a href="#reactions">واکنش‌ها</a></li>
-                    <li><a href="#help">رفع اشکال</a></li>
-                    <li><a href="#contact">تماس</a></li>
+                    <li><a href="#" onclick="showPage('home')">خانه</a></li>
+                    <li><a href="#" onclick="showPage('handouts')">جزوات</a></li>
+                    <li><a href="#" onclick="showPage('questions')">نمونه سوالات</a></li>
+                    <li><a href="#" onclick="showPage('quiz')">آزمون آنلاین</a></li>
+                    <li><a href="#" onclick="showPage('videos')">ویدیوها</a></li>
+                    <li><a href="#" onclick="showPage('gallery')">عکس کلاس‌ها</a></li>
+                    <li><a href="#" onclick="showPage('contact')">تماس</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -646,251 +582,459 @@
         </div>
     </header>
 
-    <!-- صفحه اصلی - درباره من -->
-    <section class="hero" id="home">
-        <div class="container">
-            <h1 style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 20px;">مدرس تخصصی شیمی کنکور</h1>
-            <p style="font-size: 1.3rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto 40px;">
-                با بیش از ۱۲ سال تجربه تدریس و موفقیت صدها دانش‌آموز در کنکور سراسری
-            </p>
-            
-            <div class="teacher-profile">
-                <div class="teacher-photo">
-                    <i class="fas fa-user-graduate"></i>
+    <!-- صفحه اصلی -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div class="container">
+                <h1 style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 20px;">مدرس تخصصی شیمی کنکور</h1>
+                <p style="font-size: 1.3rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto 40px;">
+                    با بیش از ۱۲ سال تجربه تدریس و موفقیت صدها دانش‌آموز در کنکور سراسری
+                </p>
+                
+                <div class="teacher-profile">
+                    <div class="teacher-photo">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="teacher-info" style="max-width: 600px; text-align: right;">
+                        <h2 style="color: var(--accent-blue); margin-bottom: 20px; font-size: 2.2rem;">دکتر علی احمدی</h2>
+                        <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 15px;">دکترای شیمی آلی از دانشگاه تهران با رتبه برتر کنکور ۱۳۸۸</p>
+                        <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 15px;">مؤلف ۵ جلد کتاب کمک‌آموزشی شیمی کنکور</p>
+                        <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 15px;">مدرس دوره‌های آنلاین با بیش از ۳,۰۰۰ دانش‌آموز</p>
+                    </div>
                 </div>
-                <div class="teacher-info">
-                    <h2>دکتر علی احمدی</h2>
-                    <p>دکترای شیمی آلی از دانشگاه تهران با رتبه برتر کنکور ۱۳۸۸</p>
-                    <p>مؤلف ۵ جلد کتاب کمک‌آموزشی شیمی کنکور با تیراژ بیش از ۵۰,۰۰۰ نسخه</p>
-                    <p>مدرس دوره‌های آنلاین با بیش از ۳,۰۰۰ دانش‌آموز در سراسر کشور</p>
-                    <p>طراح سؤالات آزمون‌های آزمایشی برندهای معتبر کنکور</p>
-                    
-                    <div class="achievements">
-                        <div class="achievement">
-                            <h4>۱۲+ سال</h4>
-                            <p>تجربه تدریس</p>
-                        </div>
-                        <div class="achievement">
-                            <h4>۵۰۰+</h4>
-                            <p>دانش‌آموز رتبه زیر ۱۰۰۰</p>
-                        </div>
-                        <div class="achievement">
-                            <h4>۹۵%</h4>
-                            <p>رضایت دانش‌آموزان</p>
-                        </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 class="section-title">خدمات آموزشی</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>جزوات تخصصی</h3>
+                        <p>جزوات کامل و طبقه‌بندی شده تمام مباحث شیمی کنکور</p>
+                        <a href="#" onclick="showPage('handouts')" class="btn">مشاهده جزوات</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>نمونه سوالات</h3>
+                        <p>بانک سوالات کنکور سال‌های گذشته با پاسخ تشریحی</p>
+                        <a href="#" onclick="showPage('questions')" class="btn">مشاهده سوالات</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>آزمون آنلاین</h3>
+                        <p>آزمون‌های شبیه‌سازی شده کنکور با تصحیح خودکار</p>
+                        <a href="#" onclick="showPage('quiz')" class="btn">شرکت در آزمون</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>ویدیوهای آموزشی</h3>
+                        <p>دوره‌های ویدیویی کامل تدریس شیمی کنکور</p>
+                        <a href="#" onclick="showPage('videos')" class="btn">مشاهده ویدیوها</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="container">
-        <!-- محاسبه جرم مولی تمام عناصر -->
-        <section id="calculator">
-            <span class="section-anchor" id="calculator-anchor"></span>
-            <h2 class="section-title">محاسبه جرم مولی تمام عناصر</h2>
-            <div class="all-elements-calculator">
-                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 20px;">
-                    روی هر عنصر کلیک کنید تا جرم مولی و اطلاعات آن نمایش داده شود
-                </p>
-                <div class="elements-grid" id="all-elements-grid">
-                    <!-- عناصر با جاوااسکریپت پر می‌شوند -->
-                </div>
-            </div>
-        </section>
-
-        <!-- جدول تناوبی عناصر ۱ تا ۳۶ -->
-        <section id="periodic">
-            <span class="section-anchor" id="periodic-anchor"></span>
-            <h2 class="section-title">جدول تناوبی عناصر (۱ تا ۳۶)</h2>
-            <div class="full-periodic-table">
-                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px;">
-                    جدول کامل تناوبی عناصر با عکس و اطلاعات کامل - کلیک روی هر عنصر
-                </p>
-                <div class="table-container" id="periodic-table-container">
-                    <!-- جدول با جاوااسکریپت پر می‌شود -->
+    <!-- صفحه جزوات -->
+    <section id="handouts" class="page">
+        <div class="container">
+            <h2 class="section-title">جزوات آموزشی شیمی کنکور</h2>
+            <div class="handouts-container">
+                <div class="handout-card">
+                    <div class="handout-header">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="handout-content">
+                        <h3>ساختار اتم و جدول تناوبی</h3>
+                        <div class="handout-meta">
+                            <span><i class="fas fa-book"></i> فصل ۱</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <p>جزوه کامل فصل اول شیمی دهم همراه با مثال‌های متعدد و تست‌های کنکور سال‌های اخیر</p>
+                        <a href="#" class="btn">دانلود جزوه</a>
+                    </div>
                 </div>
                 
-                <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 30px;">
-                    <div style="display: flex; align-items: center;">
-                        <div class="periodic-element alkali-metal" style="width: 20px; height: 20px; margin-left: 10px;"></div>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">فلزات قلیایی</span>
+                <div class="handout-card">
+                    <div class="handout-header">
+                        <i class="fas fa-water"></i>
                     </div>
-                    <div style="display: flex; align-items: center;">
-                        <div class="periodic-element alkaline-earth" style="width: 20px; height: 20px; margin-left: 10px;"></div>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">فلزات قلیایی خاکی</span>
+                    <div class="handout-content">
+                        <h3>محلول‌ها و غلظت</h3>
+                        <div class="handout-meta">
+                            <span><i class="fas fa-book"></i> فصل ۳</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <p>جزوه فصل سوم شیمی یازدهم با روش‌های محاسباتی سریع برای حل مسائل کنکور</p>
+                        <a href="#" class="btn">دانلود جزوه</a>
                     </div>
-                    <div style="display: flex; align-items: center;">
-                        <div class="periodic-element transition-metal" style="width: 20px; height: 20px; margin-left: 10px;"></div>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">فلزات واسطه</span>
+                </div>
+                
+                <div class="handout-card">
+                    <div class="handout-header">
+                        <i class="fas fa-bolt"></i>
                     </div>
-                    <div style="display: flex; align-items: center;">
-                        <div class="periodic-element metalloid" style="width: 20px; height: 20px; margin-left: 10px;"></div>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">شبه فلزات</span>
+                    <div class="handout-content">
+                        <h3>الکتروشیمی و پیل‌ها</h3>
+                        <div class="handout-meta">
+                            <span><i class="fas fa-book"></i> فصل ۴</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <p>جزوه کامل الکتروشیمی شیمی دوازدهم با طبقه‌بندی تمامی واکنش‌های اکسایش و کاهش</p>
+                        <a href="#" class="btn">دانلود جزوه</a>
                     </div>
-                    <div style="display: flex; align-items: center;">
-                        <div class="periodic-element nonmetal" style="width: 20px; height: 20px; margin-left: 10px;"></div>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">نافلزات</span>
+                </div>
+                
+                <div class="handout-card">
+                    <div class="handout-header">
+                        <i class="fas fa-flask"></i>
                     </div>
-                    <div style="display: flex; align-items: center;">
-                        <div class="periodic-element halogen" style="width: 20px; height: 20px; margin-left: 10px;"></div>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">هالوژن‌ها</span>
-                    </div>
-                    <div style="display: flex; align-items: center;">
-                        <div class="periodic-element noble-gas" style="width: 20px; height: 20px; margin-left: 10px;"></div>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">گازهای نجیب</span>
+                    <div class="handout-content">
+                        <h3>ترمودینامیک شیمیایی</h3>
+                        <div class="handout-meta">
+                            <span><i class="fas fa-book"></i> فصل ۲</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF</span>
+                        </div>
+                        <p>جزوه کامل مباحث ترمودینامیک با فرمول‌های مهم و روش‌های حل مسئله</p>
+                        <a href="#" class="btn">دانلود جزوه</a>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- واکنش‌های مهم شیمی -->
-        <section id="reactions">
-            <span class="section-anchor" id="reactions-anchor"></span>
-            <h2 class="section-title">واکنش‌های مهم شیمی کنکور</h2>
-            <div class="important-reactions">
-                <!-- واکنش‌ها با جاوااسکریپت پر می‌شوند -->
-            </div>
-        </section>
-
-        <!-- رفع اشکال -->
-        <section id="help">
-            <span class="section-anchor" id="help-anchor"></span>
-            <h2 class="section-title">رفع اشکال و پرسش و پاسخ</h2>
-            <div class="help-section">
-                <div class="help-form">
-                    <h3 style="color: var(--accent-blue); text-align: center; margin-bottom: 30px;">
-                        سوالات خود را از من بپرسید
-                    </h3>
-                    <form id="question-form">
-                        <div class="form-group">
-                            <label for="name">نام و نام خانوادگی:</label>
-                            <input type="text" id="name" class="form-control" placeholder="نام خود را وارد کنید" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone">شماره تماس:</label>
-                            <input type="tel" id="phone" class="form-control" placeholder="۰۹۱۲XXXXXXX" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">موضوع سوال:</label>
-                            <select id="subject" class="form-control" required>
-                                <option value="">موضوع را انتخاب کنید</option>
-                                <option value="ساختار اتم">ساختار اتم</option>
-                                <option value="جدول تناوبی">جدول تناوبی</option>
-                                <option value="پیوندهای شیمیایی">پیوندهای شیمیایی</option>
-                                <option value="استوکیومتری">استوکیومتری</option>
-                                <option value="ترمودینامیک">ترمودینامیک</option>
-                                <option value="سینتیک">سینتیک</option>
-                                <option value="تعادل شیمیایی">تعادل شیمیایی</option>
-                                <option value="اسید و باز">اسید و باز</option>
-                                <option value="الکتروشیمی">الکتروشیمی</option>
-                                <option value="شیمی آلی">شیمی آلی</option>
-                                <option value="سایر">سایر</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="question">سوال خود را بنویسید:</label>
-                            <textarea id="question" class="form-control" placeholder="سوال شیمی خود را به طور کامل شرح دهید..." required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn">
-                            <i class="fas fa-paper-plane"></i> ارسال سوال
-                        </button>
-                    </form>
-                    
-                    <div class="help-info">
-                        <h4 style="color: var(--accent-blue); margin-bottom: 10px;">نکات مهم:</h4>
-                        <ul style="color: var(--text-secondary); padding-right: 20px;">
-                            <li>پاسخ سوالات شما حداکثر طی ۲۴ ساعت داده می‌شود</li>
-                            <li>شماره تماس شما فقط برای ارتباط با شما استفاده می‌شود</li>
-                            <li>سوالات خود را به طور کامل و واضح مطرح کنید</li>
-                            <li>می‌توانید عکس مسئله یا تمرین را نیز ارسال کنید (در صورت نیاز)</li>
-                            <li>سوالات کنکور سال‌های گذشته در اولویت پاسخگویی هستند</li>
-                        </ul>
+    <!-- صفحه نمونه سوالات -->
+    <section id="questions" class="page">
+        <div class="container">
+            <h2 class="section-title">نمونه سوالات کنکور</h2>
+            <div class="questions-container">
+                <div class="question-card">
+                    <div class="question-header">
+                        <h3>کنکور ۱۴۰۲</h3>
+                        <span class="reaction-type">سریال A</span>
                     </div>
+                    <p>سوالات کنکور سراسری ۱۴۰۲ رشته تجربی با پاسخ تشریحی کامل</p>
+                    <div style="margin-top: 20px;">
+                        <span style="color: var(--text-muted);"><i class="fas fa-clock"></i> زمان پیشنهادی: ۳۵ دقیقه</span><br>
+                        <span style="color: var(--text-muted);"><i class="fas fa-question-circle"></i> تعداد سوالات: ۳۵</span>
+                    </div>
+                    <a href="#" class="btn" style="margin-top: 20px; display: inline-block;">دانلود سوالات</a>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question-header">
+                        <h3>کنکور ۱۴۰۱</h3>
+                        <span class="reaction-type">سریال B</span>
+                    </div>
+                    <p>سوالات کنکور سراسری ۱۴۰۱ رشته ریاضی با پاسخ کلیدی</p>
+                    <div style="margin-top: 20px;">
+                        <span style="color: var(--text-muted);"><i class="fas fa-clock"></i> زمان پیشنهادی: ۳۵ دقیقه</span><br>
+                        <span style="color: var(--text-muted);"><i class="fas fa-question-circle"></i> تعداد سوالات: ۳۵</span>
+                    </div>
+                    <a href="#" class="btn" style="margin-top: 20px; display: inline-block;">دانلود سوالات</a>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question-header">
+                        <h3>آزمون آزمایشی</h3>
+                        <span class="reaction-type">قلم چی</span>
+                    </div>
+                    <p>آزمون آزمایشی قلم چی دی ۱۴۰۲ با پاسخ تشریحی</p>
+                    <div style="margin-top: 20px;">
+                        <span style="color: var(--text-muted);"><i class="fas fa-clock"></i> زمان پیشنهادی: ۴۰ دقیقه</span><br>
+                        <span style="color: var(--text-muted);"><i class="fas fa-question-circle"></i> تعداد سوالات: ۴۰</span>
+                    </div>
+                    <a href="#" class="btn" style="margin-top: 20px; display: inline-block;">دانلود سوالات</a>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question-header">
+                        <h3>سوالات تألیفی</h3>
+                        <span class="reaction-type">مباحث ترکیبی</span>
+                    </div>
+                    <p>سوالات تألیفی ترکیبی از تمام مباحث شیمی کنکور</p>
+                    <div style="margin-top: 20px;">
+                        <span style="color: var(--text-muted);"><i class="fas fa-clock"></i> زمان پیشنهادی: ۴۵ دقیقه</span><br>
+                        <span style="color: var(--text-muted);"><i class="fas fa-question-circle"></i> تعداد سوالات: ۴۵</span>
+                    </div>
+                    <a href="#" class="btn" style="margin-top: 20px; display: inline-block;">دانلود سوالات</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- نتایج دانش‌آموزان -->
-        <section id="results">
-            <span class="section-anchor" id="results-anchor"></span>
-            <h2 class="section-title">نتایج دانش‌آموزان</h2>
-            <div class="results-container">
-                <div class="result-card">
-                    <div style="font-size: 2.5rem; color: var(--accent-purple); margin-bottom: 15px;">
-                        <i class="fas fa-trophy"></i>
+    <!-- صفحه آزمون آنلاین -->
+    <section id="quiz" class="page">
+        <div class="container">
+            <h2 class="section-title">آزمون آنلاین شیمی</h2>
+            
+            <div class="quiz-container" id="quiz-container">
+                <div class="quiz-progress">
+                    <div>
+                        <h3 id="question-number">سوال ۱ از ۱۰</h3>
+                        <p style="color: var(--text-muted);" id="timer">زمان باقی‌مانده: ۳۰:۰۰</p>
                     </div>
-                    <div style="font-size: 2.2rem; font-weight: bold; color: var(--accent-blue); margin-bottom: 10px;">
-                        ۹۸%
+                    <div>
+                        <span style="color: var(--accent-blue); font-weight: bold;" id="score">امتیاز: ۰</span>
                     </div>
-                    <h3>معدل بالای ۱۸</h3>
-                    <p style="color: var(--text-secondary);">درصد دانش‌آموزانی که در شیمی کنکور معدل بالای ۱۸ کسب کرده‌اند</p>
                 </div>
-                <div class="result-card">
-                    <div style="font-size: 2.5rem; color: var(--accent-purple); margin-bottom: 15px;">
-                        <i class="fas fa-medal"></i>
-                    </div>
-                    <div style="font-size: 2.2rem; font-weight: bold; color: var(--accent-blue); margin-bottom: 10px;">
-                        ۸۵%
-                    </div>
-                    <h3>رتبه زیر ۱۰۰۰</h3>
-                    <p style="color: var(--text-secondary);">درصد دانش‌آموزانی که با کمک این دوره‌ها رتبه زیر ۱۰۰۰ کسب کرده‌اند</p>
+                
+                <div class="question-box">
+                    <h3 id="question-text">کدام عنصر در گروه هالوژن‌ها قرار دارد؟</h3>
                 </div>
-                <div class="result-card">
-                    <div style="font-size: 2.5rem; color: var(--accent-purple); margin-bottom: 15px;">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
-                    <div style="font-size: 2.2rem; font-weight: bold; color: var(--accent-blue); margin-bottom: 10px;">
-                        ۱۲۰۰+
-                    </div>
-                    <h3>دانش‌آموز موفق</h3>
-                    <p style="color: var(--text-secondary);">تعداد دانش‌آموزانی که در ۵ سال اخیر در شیمی کنکور موفق بوده‌اند</p>
+                
+                <div class="options-container" id="options-container">
+                    <!-- گزینه‌ها با جاوااسکریپت پر می‌شوند -->
+                </div>
+                
+                <div class="quiz-controls">
+                    <button class="btn" id="prev-btn" onclick="prevQuestion()">سوال قبلی</button>
+                    <button class="btn" id="next-btn" onclick="nextQuestion()">سوال بعدی</button>
+                    <button class="btn" style="background-color: var(--accent-green);" onclick="submitQuiz()">پایان آزمون</button>
                 </div>
             </div>
-        </section>
+            
+            <div class="result-box" id="result-box">
+                <h2 style="color: var(--accent-blue); margin-bottom: 20px;">نتیجه آزمون</h2>
+                <div style="font-size: 4rem; color: var(--accent-green); margin: 20px 0;" id="final-score">۸۵٪</div>
+                <h3 id="result-message">عالی! عملکرد بسیار خوبی داشتید.</h3>
+                <p style="color: var(--text-secondary); margin: 20px 0;" id="result-details">
+                    شما به ۸ سوال از ۱۰ سوال پاسخ صحیح دادید.
+                </p>
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                    <button class="btn" onclick="restartQuiz()">آزمون مجدد</button>
+                    <button class="btn" onclick="showAnswers()">مشاهده پاسخ‌ها</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <!-- اطلاعات تماس -->
-        <section id="contact">
-            <span class="section-anchor" id="contact-anchor"></span>
-            <h2 class="section-title">اطلاعات تماس</h2>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <div class="contact-icon">
+    <!-- صفحه ویدیوهای آموزشی -->
+    <section id="videos" class="page">
+        <div class="container">
+            <h2 class="section-title">ویدیوهای آموزشی شیمی</h2>
+            <div class="videos-container">
+                <div class="video-card">
+                    <div class="video-placeholder">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-content">
+                        <h3>ساختار اتم - جلسه اول</h3>
+                        <p>آموزش کامل ساختار اتم، ذرات زیراتمی و مدل‌های اتمی</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-clock"></i> ۴۵ دقیقه</span>
+                            <span><i class="fas fa-eye"></i> ۱,۲۵۰ بازدید</span>
+                        </div>
+                        <a href="#" class="btn" style="margin-top: 15px;">مشاهده ویدیو</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-placeholder">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-content">
+                        <h3>جدول تناوبی پیشرفته</h3>
+                        <p>تدریس کامل جدول تناوبی و نکات کنکوری آن</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-clock"></i> ۶۰ دقیقه</span>
+                            <span><i class="fas fa-eye"></i> ۲,۱۰۰ بازدید</span>
+                        </div>
+                        <a href="#" class="btn" style="margin-top: 15px;">مشاهده ویدیو</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-placeholder">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-content">
+                        <h3>محلول‌ها و استوکیومتری</h3>
+                        <p>روش‌های سریع حل مسائل غلظت و استوکیومتری</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-clock"></i> ۵۵ دقیقه</span>
+                            <span><i class="fas fa-eye"></i> ۱,۸۰۰ بازدید</span>
+                        </div>
+                        <a href="#" class="btn" style="margin-top: 15px;">مشاهده ویدیو</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-placeholder">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-content">
+                        <h3>ترمودینامیک شیمیایی</h3>
+                        <p>آموزش کامل مفاهیم آنتالپی، آنتروپی و انرژی آزاد</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-clock"></i> ۷۰ دقیقه</span>
+                            <span><i class="fas fa-eye"></i> ۱,۵۰۰ بازدید</span>
+                        </div>
+                        <a href="#" class="btn" style="margin-top: 15px;">مشاهده ویدیو</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-placeholder">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-content">
+                        <h3>الکتروشیمی کنکور</h3>
+                        <p>پیل‌های گالوانی و الکترولیتی به زبان ساده</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-clock"></i> ۵۰ دقیقه</span>
+                            <span><i class="fas fa-eye"></i> ۲,۳۰۰ بازدید</span>
+                        </div>
+                        <a href="#" class="btn" style="margin-top: 15px;">مشاهده ویدیو</a>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-placeholder">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-content">
+                        <h3>شیمی آلی - ترکیبات کربن</h3>
+                        <p>آموزش کامل شیمی آلی و ترکیبات کربن</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-clock"></i> ۶۵ دقیقه</span>
+                            <span><i class="fas fa-eye"></i> ۱,۹۰۰ بازدید</span>
+                        </div>
+                        <a href="#" class="btn" style="margin-top: 15px;">مشاهده ویدیو</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- صفحه عکس کلاس‌ها -->
+    <section id="gallery" class="page">
+        <div class="container">
+            <h2 class="section-title">عکس‌های کلاس‌های آموزشی</h2>
+            <div class="gallery-container">
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="gallery-caption">
+                        <h3>کلاس حضوری تهران</h3>
+                        <p>اردیبهشت ۱۴۰۲ - آموزشگاه فرهیختگان</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="gallery-caption">
+                        <h3>کارگاه حل تمرین</h3>
+                        <p>شهریور ۱۴۰۲ - دانش‌آموزان رتبه برتر</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="gallery-caption">
+                        <h3>جشن فارغ‌التحصیلی</h3>
+                        <p>تیر ۱۴۰۲ - دوره آنلاین تابستانه</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="gallery-caption">
+                        <h3>آزمایشگاه شیمی</h3>
+                        <p>آذر ۱۴۰۲ - دبیرستان علامه حلی</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <div class="gallery-caption">
+                        <h3>کلاس آنلاین</h3>
+                        <p>مهر ۱۴۰۲ - دانش‌آموزان سراسر کشور</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="gallery-caption">
+                        <h3>تقدیر از رتبه‌های برتر</h3>
+                        <p>مرداد ۱۴۰۲ - مراسم اهدای جوایز</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- صفحه تماس -->
+    <section id="contact" class="page">
+        <div class="container">
+            <h2 class="section-title">تماس با من</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-bottom: 50px;">
+                <div class="contact-item" style="display: flex; align-items: center; background-color: var(--light-blue); padding: 20px; border-radius: 8px; transition: var(--transition);">
+                    <div class="contact-icon" style="background-color: var(--deep-blue); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 20px; font-size: 1.5rem; color: var(--accent-blue);">
                         <i class="fas fa-phone"></i>
                     </div>
                     <div class="contact-text">
-                        <h4>شماره تماس</h4>
-                        <p>۰۹۱۲XXX۱۲۳۴</p>
+                        <h4 style="margin-bottom: 5px; color: var(--text-primary);">شماره تماس</h4>
+                        <p style="color: var(--text-secondary);">۰۹۱۲XXX۱۲۳۴</p>
                     </div>
                 </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
+                
+                <div class="contact-item" style="display: flex; align-items: center; background-color: var(--light-blue); padding: 20px; border-radius: 8px; transition: var(--transition);">
+                    <div class="contact-icon" style="background-color: var(--deep-blue); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 20px; font-size: 1.5rem; color: var(--accent-blue);">
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="contact-text">
-                        <h4>ایمیل</h4>
-                        <p>chemistry.teacher@example.com</p>
+                        <h4 style="margin-bottom: 5px; color: var(--text-primary);">ایمیل</h4>
+                        <p style="color: var(--text-secondary);">chemistry.teacher@example.com</p>
                     </div>
                 </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
+                
+                <div class="contact-item" style="display: flex; align-items: center; background-color: var(--light-blue); padding: 20px; border-radius: 8px; transition: var(--transition);">
+                    <div class="contact-icon" style="background-color: var(--deep-blue); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 20px; font-size: 1.5rem; color: var(--accent-blue);">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div class="contact-text">
-                        <h4>آدرس</h4>
-                        <p>تهران، خیابان آزادی، دانشگاه صنعتی شریف</p>
+                        <h4 style="margin-bottom: 5px; color: var(--text-primary);">آدرس</h4>
+                        <p style="color: var(--text-secondary);">تهران، خیابان آزادی، دانشگاه صنعتی شریف</p>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
     <!-- فوتر -->
-    <footer id="social">
+    <footer>
         <div class="container">
             <div class="social-links">
                 <a href="https://www.instagram.com" class="social-link" target="_blank">
@@ -913,7 +1057,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript اصلی سایت -->
+    <!-- JavaScript -->
     <script>
         // منوی موبایل
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -933,725 +1077,236 @@
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
-        
-        // اسکرول نرم
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+
+        // سیستم نمایش صفحات
+        function showPage(pageId) {
+            // مخفی کردن همه صفحات
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // نمایش صفحه انتخاب شده
+            document.getElementById(pageId).classList.add('active');
+            
+            // اسکرول به بالا
+            window.scrollTo(0, 0);
+            
+            return false; // جلوگیری از رفتن به بالای صفحه
+        }
+
+        // سیستم آزمون آنلاین
+        const quizQuestions = [
+            {
+                question: "کدام عنصر در گروه هالوژن‌ها قرار دارد؟",
+                options: ["سدیم (Na)", "کلر (Cl)", "کلسیم (Ca)", "آهن (Fe)"],
+                correct: 1
+            },
+            {
+                question: "جرم مولی آب (H₂O) چند گرم بر مول است؟",
+                options: ["16 g/mol", "18 g/mol", "20 g/mol", "22 g/mol"],
+                correct: 1
+            },
+            {
+                question: "واکنش احتراق متان چگونه است؟",
+                options: [
+                    "CH₄ + ۲O₂ → CO₂ + ۲H₂O",
+                    "۲H₂ + O₂ → ۲H₂O", 
+                    "N₂ + ۳H₂ → ۲NH₃",
+                    "C + O₂ → CO₂"
+                ],
+                correct: 0
+            },
+            {
+                question: "عدد اتمی کربن چند است؟",
+                options: ["4", "6", "12", "14"],
+                correct: 1
+            },
+            {
+                question: "کدام یک از موارد زیر یک گاز نجیب است؟",
+                options: ["هیدروژن (H)", "اکسیژن (O)", "نئون (Ne)", "نیتروژن (N)"],
+                correct: 2
+            },
+            {
+                question: "pH اسید قوی تقریباً چقدر است؟",
+                options: ["14", "7", "1", "10"],
+                correct: 2
+            },
+            {
+                question: "فرمول شیمیایی سدیم کلرید چیست؟",
+                options: ["NaCl", "Na₂Cl", "NaCl₂", "Na₂Cl₂"],
+                correct: 0
+            },
+            {
+                question: "در یک پیوند کووالانسی چه چیزی به اشتراک گذاشته می‌شود؟",
+                options: ["پروتون", "نوترون", "الکترون", "یون"],
+                correct: 2
+            },
+            {
+                question: "کدام فلز در دمای اتاق به صورت مایع است؟",
+                options: ["طلا (Au)", "جیوه (Hg)", "مس (Cu)", "آهن (Fe)"],
+                correct: 1
+            },
+            {
+                question: "واکنش خنثی‌سازی بین اسید و باز چه تولید می‌کند؟",
+                options: ["نمک و آب", "گاز هیدروژن", "اکسید فلز", "الکل"],
+                correct: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = new Array(quizQuestions.length).fill(-1);
+        let timer;
+        let timeLeft = 30 * 60; // 30 دقیقه به ثانیه
+
+        function startTimer() {
+            clearInterval(timer);
+            timeLeft = 30 * 60;
+            updateTimer();
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `زمان باقی‌مانده: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function loadQuestion() {
+            const question = quizQuestions[currentQuestion];
+            document.getElementById('question-number').textContent = `سوال ${currentQuestion + 1} از ${quizQuestions.length}`;
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('score').textContent = `امتیاز: ${score}`;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                if (userAnswers[currentQuestion] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                optionDiv.innerHTML = `
+                    <span style="font-weight: bold; margin-left: 10px;">${String.fromCharCode(65 + index)}.</span>
+                    <span>${option}</span>
+                `;
+                optionDiv.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // مدیریت دکمه‌ها
+            document.getElementById('prev-btn').style.display = currentQuestion === 0 ? 'none' : 'inline-block';
+            document.getElementById('next-btn').textContent = currentQuestion === quizQuestions.length - 1 ? 'اتمام' : 'سوال بعدی';
+        }
+
+        function selectOption(optionIndex) {
+            // حذف انتخاب قبلی
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // انتخاب گزینه جدید
+            document.querySelectorAll('.option')[optionIndex].classList.add('selected');
+            userAnswers[currentQuestion] = optionIndex;
+            
+            // بررسی پاسخ صحیح
+            if (optionIndex === quizQuestions[currentQuestion].correct) {
+                // اگر قبلاً پاسخ غلط داده بود، امتیاز را اضافه کن
+                if (userAnswers[currentQuestion] !== optionIndex) {
+                    score++;
+                }
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizQuestions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function submitQuiz() {
+            clearInterval(timer);
+            
+            // محاسبه نمره نهایی
+            let correctAnswers = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === quizQuestions[index].correct) {
+                    correctAnswers++;
                 }
             });
-        });
-
-        // داده‌های عناصر ۱ تا ۳۶
-        const elements1to36 = [
-            // دوره 1
-            {symbol: "H", name: "هیدروژن", number: 1, mass: 1.01, type: "نافلز", group: "nonmetal", state: "گاز", discovered: 1766},
-            {symbol: "He", name: "هلیوم", number: 2, mass: 4.00, type: "گاز نجیب", group: "noble-gas", state: "گاز", discovered: 1895},
             
-            // دوره 2
-            {symbol: "Li", name: "لیتیم", number: 3, mass: 6.94, type: "فلز قلیایی", group: "alkali-metal", state: "جامد", discovered: 1817},
-            {symbol: "Be", name: "بریلیم", number: 4, mass: 9.01, type: "فلز قلیایی خاکی", group: "alkaline-earth", state: "جامد", discovered: 1797},
-            {symbol: "B", name: "بور", number: 5, mass: 10.81, type: "شبه فلز", group: "metalloid", state: "جامد", discovered: 1808},
-            {symbol: "C", name: "کربن", number: 6, mass: 12.01, type: "نافلز", group: "nonmetal", state: "جامد", discovered: "دوره باستان"},
-            {symbol: "N", name: "نیتروژن", number: 7, mass: 14.01, type: "نافلز", group: "nonmetal", state: "گاز", discovered: 1772},
-            {symbol: "O", name: "اکسیژن", number: 8, mass: 16.00, type: "نافلز", group: "nonmetal", state: "گاز", discovered: 1774},
-            {symbol: "F", name: "فلوئور", number: 9, mass: 19.00, type: "هالوژن", group: "halogen", state: "گاز", discovered: 1886},
-            {symbol: "Ne", name: "نئون", number: 10, mass: 20.18, type: "گاز نجیب", group: "noble-gas", state: "گاز", discovered: 1898},
+            const percentage = Math.round((correctAnswers / quizQuestions.length) * 100);
             
-            // دوره 3
-            {symbol: "Na", name: "سدیم", number: 11, mass: 22.99, type: "فلز قلیایی", group: "alkali-metal", state: "جامد", discovered: 1807},
-            {symbol: "Mg", name: "منیزیم", number: 12, mass: 24.31, type: "فلز قلیایی خاکی", group: "alkaline-earth", state: "جامد", discovered: 1755},
-            {symbol: "Al", name: "آلومینیوم", number: 13, mass: 26.98, type: "فلز", group: "basic-metal", state: "جامد", discovered: 1825},
-            {symbol: "Si", name: "سیلیسیم", number: 14, mass: 28.09, type: "شبه فلز", group: "metalloid", state: "جامد", discovered: 1824},
-            {symbol: "P", name: "فسفر", number: 15, mass: 30.97, type: "نافلز", group: "nonmetal", state: "جامد", discovered: 1669},
-            {symbol: "S", name: "گوگرد", number: 16, mass: 32.07, type: "نافلز", group: "nonmetal", state: "جامد", discovered: "دوره باستان"},
-            {symbol: "Cl", name: "کلر", number: 17, mass: 35.45, type: "هالوژن", group: "halogen", state: "گاز", discovered: 1774},
-            {symbol: "Ar", name: "آرگون", number: 18, mass: 39.95, type: "گاز نجیب", group: "noble-gas", state: "گاز", discovered: 1894},
+            // نمایش نتیجه
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('result-box').style.display = 'block';
+            document.getElementById('final-score').textContent = `${percentage}٪`;
             
-            // دوره 4
-            {symbol: "K", name: "پتاسیم", number: 19, mass: 39.10, type: "فلز قلیایی", group: "alkali-metal", state: "جامد", discovered: 1807},
-            {symbol: "Ca", name: "کلسیم", number: 20, mass: 40.08, type: "فلز قلیایی خاکی", group: "alkaline-earth", state: "جامد", discovered: 1808},
-            {symbol: "Sc", name: "اسکاندیم", number: 21, mass: 44.96, type: "فلز واسطه", group: "transition-metal", state: "جامد", discovered: 1879},
-            {symbol: "Ti", name: "تیتانیوم", number: 22, mass: 47.87, type: "فلز واسطه", group: "transition-metal", state: "جامد", discovered: 1791},
-            {symbol: "V", name: "وانادیم", number: 23, mass: 50.94, type: "فلز واسطه", group: "transition-metal", state: "جامد", discovered: 1801},
-            {symbol: "Cr", name: "کروم", number: 24, mass: 52.00, type: "فلز واسطه", group: "transition-metal", state: "جامد", discovered: 1797},
-            {symbol: "Mn", name: "منگنز", number: 25, mass: 54.94, type: "فلز واسطه", group: "transition-metal", state: "جامد", discovered: 1774},
-            {symbol: "Fe", name: "آهن", number: 26, mass: 55.85, type: "فلز واسطه", group: "transition-metal", state: "جامد", discovered: "دوره باستان"},
-            {symbol: "Co", name: "کبالت", number: 27, mass: 58.93, type: "فلز واسطه", group: "transition-metal", state: "جامد", discovered: 1735},
-            {symbol: "Ni", name: "نیکل", number: 28, mass: 58.69, type: "فلز واسطه", group: "transition-metal", state: "جامد", discovered: 1751},
-            {symbol: "Cu", name: "مس", number: 29, mass: 63.55, type: "فلز واسطه", group: "transition-metal", state: "جامد", discovered: "دوره باستان"},
-            {symbol: "Zn", name: "روی", number: 30, mass: 65.38, type: "فلز واسطه", group: "transition-metal", state: "جامد", discovered: 1746},
-            {symbol: "Ga", name: "گالیم", number: 31, mass: 69.72, type: "فلز", group: "basic-metal", state: "جامد", discovered: 1875},
-            {symbol: "Ge", name: "ژرمانیم", number: 32, mass: 72.63, type: "شبه فلز", group: "metalloid", state: "جامد", discovered: 1886},
-            {symbol: "As", name: "آرسنیک", number: 33, mass: 74.92, type: "شبه فلز", group: "metalloid", state: "جامد", discovered: 1250},
-            {symbol: "Se", name: "سلنیوم", number: 34, mass: 78.97, type: "نافلز", group: "nonmetal", state: "جامد", discovered: 1817},
-            {symbol: "Br", name: "برم", number: 35, mass: 79.90, type: "هالوژن", group: "halogen", state: "مایع", discovered: 1826},
-            {symbol: "Kr", name: "کریپتون", number: 36, mass: 83.80, type: "گاز نجیب", group: "noble-gas", state: "گاز", discovered: 1898}
-        ];
-
-        // ساخت لیست تمام عناصر برای محاسبه جرم مولی
-        const allElementsGrid = document.getElementById('all-elements-grid');
-        elements1to36.forEach(element => {
-            const elementItem = document.createElement('div');
-            elementItem.className = 'element-item';
-            elementItem.innerHTML = `
-                <div class="element-symbol">${element.symbol}</div>
-                <div class="element-details">
-                    <strong>${element.name}</strong><br>
-                    عدد اتمی: ${element.number}<br>
-                    جرم مولی: ${element.mass} g/mol
-                </div>
-            `;
-            
-            elementItem.addEventListener('click', () => {
-                alert(`عنصر: ${element.name} (${element.symbol})\nعدد اتمی: ${element.number}\nجرم مولی: ${element.mass} g/mol\nحالت فیزیکی: ${element.state}\nنوع: ${element.type}`);
-            });
-            
-            allElementsGrid.appendChild(elementItem);
-        });
-
-        // ساخت جدول تناوبی کامل
-        const periodicTableContainer = document.getElementById('periodic-table-container');
-        
-        // ساخت ۱۸ خانه خالی برای ردیف اول
-        for (let i = 0; i < 18; i++) {
-            const emptyDiv = document.createElement('div');
-            emptyDiv.style.visibility = 'hidden';
-            periodicTableContainer.appendChild(emptyDiv);
-        }
-
-        // اضافه کردن عناصر ۱ تا ۳۶
-        elements1to36.forEach(element => {
-            const elementDiv = document.createElement('div');
-            elementDiv.className = `periodic-element ${element.group}`;
-            elementDiv.innerHTML = `
-                <div class="element-image">
-                    ${element.symbol}
-                </div>
-                <div style="font-weight: bold; font-size: 0.9rem; margin-bottom: 3px;">${element.symbol}</div>
-                <div style="font-size: 0.7rem;">${element.number}</div>
-                <div style="font-size: 0.6rem; margin-top: 3px;">${element.name}</div>
-            `;
-            
-            elementDiv.addEventListener('click', () => {
-                const details = `
-                    🧪 عنصر: ${element.name} (${element.symbol})
-                    🔢 عدد اتمی: ${element.number}
-                    ⚖️ جرم مولی: ${element.mass} g/mol
-                    📊 نوع: ${element.type}
-                    🌡️ حالت فیزیکی: ${element.state}
-                    📅 سال کشف: ${element.discovered}
-                    
-                    نکات کنکوری:
-                    ${getElementExamTips(element)}
-                `;
-                alert(details);
-            });
-            
-            periodicTableContainer.appendChild(elementDiv);
-        });
-
-        // نکات کنکوری عناصر
-        function getElementExamTips(element) {
-            const tips = {
-                "H": "• سبک‌ترین عنصر\n• فراوان‌ترین عنصر در جهان\n• غیرفلز\n• در ترکیب آب (H₂O)",
-                "He": "• سبک‌ترین گاز نجیب\n• چگالی بسیار کم\n• در بالون‌ها استفاده می‌شود\n• نقطه جوش بسیار پایین",
-                "Li": "• سبک‌ترین فلز\n• در باتری‌های لیتیومی\n• واکنش‌پذیر با آب\n• جزو فلزات قلیایی",
-                "Na": "• در نمک طعام (NaCl)\n• واکنش شدید با آب\n• نور زرد در تست شعله\n• جزو فلزات قلیایی",
-                "K": "• نور بنفش در تست شعله\n• در کودهای شیمیایی\n• واکنش‌پذیر با آب\n• جزو فلزات قلیایی",
-                "C": "• چهارظرفیتی\n• آلوتروپ‌های الماس و گرافیت\n• پایه شیمی آلی\n• در تمام ترکیبات آلی",
-                "O": "• فراوان‌ترین عنصر در پوسته زمین\n• در آب و هوا\n• برای تنفس ضروری\n• اکسیدکننده قوی",
-                "N": "• ۷۸٪ هوا را تشکیل می‌دهد\n• در تولید آمونیاک\n• سه پیوند کووالانسی\n• گاز خنثی",
-                "Fe": "• چهارمین عنصر فراوان\n• در هموگلوبین خون\n• مغناطیسی\n• زنگ می‌زند (اکسید آهن)",
-                "Cu": "• رسانای عالی برق\n• رنگ قرمز متمایز\n• در سیم‌های برق\n• در ترکیب مس سولفات",
-                "Cl": "• گاز زرد مایل به سبز\n• در ضدعفونی آب\n• تشکیل نمک با سدیم\n• جزو هالوژن‌ها",
-                "Ne": "• در تابلوهای نئون\n• گاز نجیب\n• واکنش‌ناپذیر\n• در لامپ‌ها استفاده می‌شود"
-            };
-            
-            return tips[element.symbol] || `• عنصر ${element.type}\n• عدد اتمی: ${element.number}\n• جرم مولی: ${element.mass}\n• حالت: ${element.state}`;
-        }
-
-        // واکنش‌های مهم شیمی
-        const importantReactions = [
-            {
-                equation: "۲H₂ + O₂ → ۲H₂O",
-                name: "احتراق هیدروژن",
-                type: "احتراق",
-                details: "واکنش تولید آب از هیدروژن و اکسیژن - گرماده و بسیار سریع",
-                importance: "کنکور ۹۸، ۹۹، ۱۴۰۰"
-            },
-            {
-                equation: "CH₄ + ۲O₂ → CO₂ + ۲H₂O",
-                name: "احتراق متان",
-                type: "احتراق",
-                details: "واکنش اصلی سوختن گاز طبیعی - گرماده و تولیدکننده انرژی",
-                importance: "کنکور ۹۷، ۹۹، ۱۴۰۱"
-            },
-            {
-                equation: "N₂ + ۳H₂ ⇌ ۲NH₃",
-                name: "فرآیند هابر-بوش",
-                type: "تعادلی",
-                details: "تولید صنعتی آمونیاک - در فشار و دمای بالا با کاتالیزگر آهن",
-                importance: "کنکور ۹۶، ۹۸، ۱۴۰۰، ۱۴۰۲"
-            },
-            {
-                equation: "۲Na + ۲H₂O → ۲NaOH + H₂",
-                name: "واکنش سدیم با آب",
-                type: "جانشینی",
-                details: "واکنش شدید فلز قلیایی با آب - تولید گاز هیدروژن و سود",
-                importance: "کنکور ۹۷، ۹۹، ۱۴۰۱"
-            },
-            {
-                equation: "Zn + ۲HCl → ZnCl₂ + H₂",
-                name: "واکنش روی با اسید",
-                type: "جانشینی",
-                details: "تولید گاز هیدروژن در آزمایشگاه - فلز فعال با اسید",
-                importance: "کنکور ۹۸، ۱۴۰۰، ۱۴۰۲"
-            },
-            {
-                equation: "۲H₂O → ۲H₂ + O₂",
-                name: "الکترولیز آب",
-                type: "تجزیه",
-                details: "تولید هیدروژن و اکسیژن خالص با جریان برق",
-                importance: "کنکور ۹۹، ۱۴۰۱، ۱۴۰۲"
-            },
-            {
-                equation: "CaCO₃ → CaO + CO₂",
-                name: "تجزیه سنگ آهک",
-                type: "تجزیه",
-                details: "تولید آهک زنده و گاز دی‌اکسید کربن - گرماگیر",
-                importance: "کنکور ۹۷، ۱۴۰۰"
-            },
-            {
-                equation: "Fe₂O₃ + ۳CO → ۲Fe + ۳CO₂",
-                name: "کاهش سنگ آهن",
-                type: "اکسایش-کاهش",
-                details: "تولید آهن در کوره بلند - کاهنده: مونوکسید کربن",
-                importance: "کنکور ۹۸، ۱۴۰۱، ۱۴۰۲"
-            }
-        ];
-
-        // نمایش واکنش‌های مهم
-        const reactionsContainer = document.querySelector('.important-reactions');
-        importantReactions.forEach(reaction => {
-            const reactionCard = document.createElement('div');
-            reactionCard.className = 'reaction-card';
-            reactionCard.innerHTML = `
-                <div class="reaction-header">
-                    <h3 style="color: var(--accent-blue);">${reaction.name}</h3>
-                    <span class="reaction-type">${reaction.type}</span>
-                </div>
-                <div class="reaction-equation">${reaction.equation}</div>
-                <p class="reaction-details">${reaction.details}</p>
-                <p style="color: var(--accent-purple); font-size: 0.9rem;">
-                    <i class="fas fa-graduation-cap"></i> اهمیت در کنکور: ${reaction.importance}
-                </p>
-            `;
-            reactionsContainer.appendChild(reactionCard);
-        });
-    </script>
-
-    <!-- سیستم مدیریت سوالات -->
-    <script>
-    // ==================== سیستم مدیریت سوالات دانش‌آموزان ====================
-    
-    // ذخیره سوالات در localStorage
-    let studentQuestions = JSON.parse(localStorage.getItem('chemistryQuestions')) || [];
-    
-    // فرم رفع اشکال
-    const questionForm = document.getElementById('question-form');
-    if (questionForm) {
-        questionForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const subject = document.getElementById('subject').value;
-            const question = document.getElementById('question').value;
-            
-            if (!name || !phone || !subject || !question) {
-                alert('لطفا تمام فیلدها را پر کنید.');
-                return;
+            let message = '';
+            if (percentage >= 90) {
+                message = 'عالی! شما استعداد فوق‌العاده‌ای در شیمی دارید.';
+            } else if (percentage >= 70) {
+                message = 'خیلی خوب! دانش شیمی شما در سطح قابل قبولی است.';
+            } else if (percentage >= 50) {
+                message = 'قابل قبول. نیاز به مطالعه بیشتر دارید.';
+            } else {
+                message = 'نیاز به تمرین و مطالعه بیشتری دارید.';
             }
             
-            // ذخیره سوال
-            const newQuestion = {
-                id: Date.now(),
-                name: name,
-                phone: phone,
-                subject: subject,
-                question: question,
-                date: new Date().toLocaleString('fa-IR'),
-                status: 'جدید',
-                answer: '',
-                answerDate: ''
-            };
-            
-            studentQuestions.push(newQuestion);
-            localStorage.setItem('chemistryQuestions', JSON.stringify(studentQuestions));
-            
-            // نمایش پیام موفقیت
-            alert(`✅ سوال شما با موفقیت ثبت شد!\n\n📋 کد پیگیری: ${newQuestion.id}\n\nپاسخ شما حداکثر طی ۲۴ ساعت ارسال خواهد شد.`);
-            
-            // ریست فرم
-            questionForm.reset();
-            
-            // اعلان برای معلم
-            console.log(`📬 سوال جدید از: ${name} (${phone}) - موضوع: ${subject}`);
-        });
-    }
-    
-    // ایجاد دکمه مدیریت سوالات
-    function createAdminButton() {
-        if (document.getElementById('admin-question-btn')) return;
-        
-        const adminBtn = document.createElement('button');
-        adminBtn.id = 'admin-question-btn';
-        adminBtn.innerHTML = '📋 مدیریت سوالات';
-        adminBtn.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--accent-purple);
-            color: white;
-            border: none;
-            padding: 12px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            z-index: 1000;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 14px;
-            box-shadow: 0 4px 12px rgba(157, 78, 221, 0.3);
-            transition: all 0.3s ease;
-        `;
-        
-        adminBtn.onmouseenter = () => {
-            adminBtn.style.transform = 'translateY(-3px)';
-            adminBtn.style.boxShadow = '0 6px 15px rgba(157, 78, 221, 0.4)';
-        };
-        
-        adminBtn.onmouseleave = () => {
-            adminBtn.style.transform = 'translateY(0)';
-            adminBtn.style.boxShadow = '0 4px 12px rgba(157, 78, 221, 0.3)';
-        };
-        
-        adminBtn.onclick = showQuestionsPanel;
-        document.body.appendChild(adminBtn);
-    }
-    
-    // نمایش پنل سوالات
-    function showQuestionsPanel() {
-        const password = prompt('🔐 برای مشاهده سوالات، رمز عبور را وارد کنید:');
-        if (password !== 'chem123') {
-            alert('❌ رمز عبور اشتباه است!');
-            return;
+            document.getElementById('result-message').textContent = message;
+            document.getElementById('result-details').textContent = 
+                `شما به ${correctAnswers} سوال از ${quizQuestions.length} سوال پاسخ صحیح دادید.`;
         }
-        
-        studentQuestions = JSON.parse(localStorage.getItem('chemistryQuestions')) || [];
-        
-        // محاسبه آمار
-        const totalQuestions = studentQuestions.length;
-        const answeredQuestions = studentQuestions.filter(q => q.status === 'پاسخ داده').length;
-        const pendingQuestions = totalQuestions - answeredQuestions;
-        
-        let questionsHTML = `
-            <div style="background: var(--deep-blue); padding: 25px; border-radius: 10px; margin-bottom: 20px;">
-                <h2 style="color: var(--accent-blue); margin-bottom: 15px;">📊 آمار سوالات</h2>
-                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <div style="background: rgba(100, 255, 218, 0.1); padding: 15px; border-radius: 8px; flex: 1; min-width: 200px;">
-                        <h3 style="color: var(--accent-blue); font-size: 2.5rem; margin-bottom: 5px;">${totalQuestions}</h3>
-                        <p style="color: var(--text-secondary);">کل سوالات</p>
-                    </div>
-                    <div style="background: rgba(81, 207, 102, 0.1); padding: 15px; border-radius: 8px; flex: 1; min-width: 200px;">
-                        <h3 style="color: var(--accent-green); font-size: 2.5rem; margin-bottom: 5px;">${answeredQuestions}</h3>
-                        <p style="color: var(--text-secondary);">پاسخ داده شده</p>
-                    </div>
-                    <div style="background: rgba(255, 107, 107, 0.1); padding: 15px; border-radius: 8px; flex: 1; min-width: 200px;">
-                        <h3 style="color: var(--accent-red); font-size: 2.5rem; margin-bottom: 5px;">${pendingQuestions}</h3>
-                        <p style="color: var(--text-secondary);">در انتظار پاسخ</p>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        if (studentQuestions.length === 0) {
-            questionsHTML += '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">هنوز سوالی ثبت نشده است.</p>';
-        } else {
-            questionsHTML += `
-                <h3 style="color: var(--accent-blue); margin-bottom: 15px;">📝 لیست سوالات</h3>
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse; min-width: 800px;">
-                        <thead>
-                            <tr style="background: var(--light-blue);">
-                                <th style="padding: 12px; border: 1px solid var(--deep-blue); text-align: center;">کد</th>
-                                <th style="padding: 12px; border: 1px solid var(--deep-blue); text-align: center;">نام</th>
-                                <th style="padding: 12px; border: 1px solid var(--deep-blue); text-align: center;">شماره تماس</th>
-                                <th style="padding: 12px; border: 1px solid var(--deep-blue); text-align: center;">موضوع</th>
-                                <th style="padding: 12px; border: 1px solid var(--deep-blue); text-align: center;">تاریخ</th>
-                                <th style="padding: 12px; border: 1px solid var(--deep-blue); text-align: center;">وضعیت</th>
-                                <th style="padding: 12px; border: 1px solid var(--deep-blue); text-align: center;">عملیات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            // نمایش سوالات به ترتیب معکوس (جدیدترین اول)
-            const reversedQuestions = [...studentQuestions].reverse();
-            
-            reversedQuestions.forEach((q, index) => {
-                const rowColor = index % 2 === 0 ? 'var(--deep-blue)' : 'var(--light-blue)';
-                const statusColor = q.status === 'پاسخ داده' ? 'var(--accent-green)' : 'var(--accent-orange)';
-                
-                questionsHTML += `
-                    <tr style="background: ${rowColor};">
-                        <td style="padding: 10px; border: 1px solid var(--light-blue); text-align: center; font-family: monospace;">${q.id}</td>
-                        <td style="padding: 10px; border: 1px solid var(--light-blue); text-align: center;">${q.name}</td>
-                        <td style="padding: 10px; border: 1px solid var(--light-blue); text-align: center; direction: ltr;">${q.phone}</td>
-                        <td style="padding: 10px; border: 1px solid var(--light-blue); text-align: center;">${q.subject}</td>
-                        <td style="padding: 10px; border: 1px solid var(--light-blue); text-align: center; font-size: 0.9rem;">${q.date}</td>
-                        <td style="padding: 10px; border: 1px solid var(--light-blue); text-align: center; color: ${statusColor}; font-weight: bold;">${q.status}</td>
-                        <td style="padding: 10px; border: 1px solid var(--light-blue); text-align: center;">
-                            <button onclick="viewQuestionDetail(${q.id})" style="background: var(--accent-blue); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin: 2px; font-size: 0.9rem;">👁️ مشاهده</button>
-                            <button onclick="deleteQuestion(${q.id})" style="background: var(--accent-red); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin: 2px; font-size: 0.9rem;">🗑️ حذف</button>
-                        </td>
-                    </tr>
-                `;
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers.fill(-1);
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('result-box').style.display = 'none';
+            startTimer();
+            loadQuestion();
+        }
+
+        function showAnswers() {
+            let answersText = 'پاسخ‌های صحیح:\n\n';
+            quizQuestions.forEach((q, index) => {
+                answersText += `${index + 1}. ${q.question}\n`;
+                answersText += `پاسخ صحیح: ${q.options[q.correct]}\n`;
+                answersText += `پاسخ شما: ${userAnswers[index] !== -1 ? q.options[userAnswers[index]] : 'پاسخی نداده‌اید'}\n\n`;
             });
-            
-            questionsHTML += `
-                        </tbody>
-                    </table>
-                </div>
-            `;
+            alert(answersText);
         }
-        
-        // ایجاد مدال
-        const modal = document.createElement('div');
-        modal.id = 'questions-modal';
-        modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        `;
-        
-        const modalContent = document.createElement('div');
-        modalContent.style.cssText = `
-            background: var(--midnight-blue);
-            padding: 25px;
-            border-radius: 12px;
-            max-width: 95%;
-            max-height: 90vh;
-            overflow-y: auto;
-            width: 1300px;
-            border: 2px solid var(--accent-purple);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        `;
-        
-        modalContent.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid var(--accent-blue); padding-bottom: 15px;">
-                <h2 style="color: var(--accent-blue); margin: 0;">🎓 پنل مدیریت سوالات</h2>
-                <button onclick="closeModal()" style="background: var(--accent-red); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 1.1rem;">✕ بستن</button>
-            </div>
-            ${questionsHTML}
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--light-blue); text-align: center;">
-                <button onclick="exportToCSV()" style="background: var(--accent-green); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin: 5px; font-size: 1rem;">
-                    📥 دانلود فایل Excel
-                </button>
-                <button onclick="clearAllQuestions()" style="background: var(--accent-red); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin: 5px; font-size: 1rem;">
-                    🗑️ حذف همه سوالات
-                </button>
-                <button onclick="refreshQuestions()" style="background: var(--accent-blue); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin: 5px; font-size: 1rem;">
-                    🔄 بروزرسانی
-                </button>
-            </div>
-        `;
-        
-        modal.appendChild(modalContent);
-        document.body.appendChild(modal);
-        document.body.style.overflow = 'hidden';
-    }
-    
-    // مشاهده جزئیات سوال
-    function viewQuestionDetail(id) {
-        studentQuestions = JSON.parse(localStorage.getItem('chemistryQuestions')) || [];
-        const question = studentQuestions.find(q => q.id === id);
-        
-        if (!question) {
-            alert('سوال مورد نظر پیدا نشد.');
-            return;
-        }
-        
-        let detailsHTML = `
-            <div style="background: var(--deep-blue); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                <h3 style="color: var(--accent-blue); margin-bottom: 15px; border-bottom: 1px solid var(--accent-blue); padding-bottom: 10px;">
-                    📄 سوال شماره ${question.id}
-                </h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px;">
-                    <div>
-                        <p style="color: var(--text-secondary); margin-bottom: 5px;">👤 نام دانش‌آموز:</p>
-                        <p style="color: var(--text-primary); font-weight: bold;">${question.name}</p>
-                    </div>
-                    <div>
-                        <p style="color: var(--text-secondary); margin-bottom: 5px;">📱 شماره تماس:</p>
-                        <p style="color: var(--text-primary); font-weight: bold; direction: ltr; text-align: right;">${question.phone}</p>
-                    </div>
-                    <div>
-                        <p style="color: var(--text-secondary); margin-bottom: 5px;">🏷️ موضوع:</p>
-                        <p style="color: var(--text-primary); font-weight: bold;">${question.subject}</p>
-                    </div>
-                    <div>
-                        <p style="color: var(--text-secondary); margin-bottom: 5px;">📅 تاریخ ثبت:</p>
-                        <p style="color: var(--text-primary); font-weight: bold;">${question.date}</p>
-                    </div>
-                    <div>
-                        <p style="color: var(--text-secondary); margin-bottom: 5px;">📊 وضعیت:</p>
-                        <p style="color: ${question.status === 'پاسخ داده' ? 'var(--accent-green)' : 'var(--accent-orange)'}; font-weight: bold;">${question.status}</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="background: var(--deep-blue); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                <h4 style="color: var(--accent-blue); margin-bottom: 10px;">📝 متن سوال:</h4>
-                <div style="background: var(--light-blue); padding: 15px; border-radius: 8px; white-space: pre-line; line-height: 1.8;">
-                    ${question.question}
-                </div>
-            </div>
-        `;
-        
-        if (question.answer) {
-            detailsHTML += `
-                <div style="background: rgba(81, 207, 102, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-right: 4px solid var(--accent-green);">
-                    <h4 style="color: var(--accent-green); margin-bottom: 10px;">✅ پاسخ ثبت شده:</h4>
-                    <div style="background: rgba(81, 207, 102, 0.2); padding: 15px; border-radius: 8px; white-space: pre-line; line-height: 1.8;">
-                        ${question.answer}
-                    </div>
-                    ${question.answerDate ? `<p style="color: var(--text-secondary); margin-top: 10px; font-size: 0.9rem;">📅 تاریخ پاسخ: ${question.answerDate}</p>` : ''}
-                </div>
-            `;
-        }
-        
-        if (!question.answer) {
-            detailsHTML += `
-                <div style="background: rgba(255, 107, 107, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                    <h4 style="color: var(--accent-orange); margin-bottom: 15px;">✍️ ثبت پاسخ:</h4>
-                    <textarea id="answerText" style="width: 100%; height: 200px; padding: 15px; background: var(--light-blue); color: var(--text-primary); border: 2px solid var(--accent-blue); border-radius: 8px; margin-bottom: 15px; font-family: 'Vazirmatn', sans-serif; font-size: 1rem;" placeholder="پاسخ خود را اینجا بنویسید..."></textarea>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="saveAnswer(${question.id})" style="background: var(--accent-green); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 1rem; flex: 1;">
-                            💾 ذخیره پاسخ
-                        </button>
-                        <button onclick="sendWhatsApp('${question.phone}', ${question.id})" style="background: #25D366; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 1rem; flex: 1;">
-                            📱 ارسال در واتس‌اپ
-                        </button>
-                        <button onclick="copyPhoneNumber('${question.phone}')" style="background: var(--accent-purple); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 1rem; flex: 1;">
-                            📞 کپی شماره
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // ایجاد مدال جزئیات
-        const detailModal = document.createElement('div');
-        detailModal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 3000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        `;
-        
-        const detailContent = document.createElement('div');
-        detailContent.style.cssText = `
-            background: var(--midnight-blue);
-            padding: 25px;
-            border-radius: 12px;
-            max-width: 95%;
-            max-height: 90vh;
-            overflow-y: auto;
-            width: 900px;
-            border: 2px solid var(--accent-blue);
-        `;
-        
-        detailContent.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3 style="color: var(--accent-blue); margin: 0;">جزئیات سوال</h3>
-                <button onclick="closeDetailModal()" style="background: var(--accent-red); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 1.1rem;">✕ بستن</button>
-            </div>
-            ${detailsHTML}
-            <div style="text-align: center; margin-top: 20px;">
-                <button onclick="closeDetailModal()" style="background: var(--accent-blue); color: white; border: none; padding: 10px 30px; border-radius: 6px; cursor: pointer; font-size: 1rem;">بازگشت به لیست</button>
-            </div>
-        `;
-        
-        detailModal.appendChild(detailContent);
-        document.body.appendChild(detailModal);
-        document.body.style.overflow = 'hidden';
-        
-        window.currentDetailModal = detailModal;
-    }
-    
-    // ذخیره پاسخ
-    function saveAnswer(id) {
-        const answerText = document.getElementById('answerText');
-        if (!answerText || !answerText.value.trim()) {
-            alert('لطفا متن پاسخ را وارد کنید.');
-            return;
-        }
-        
-        studentQuestions = JSON.parse(localStorage.getItem('chemistryQuestions')) || [];
-        const questionIndex = studentQuestions.findIndex(q => q.id === id);
-        
-        if (questionIndex !== -1) {
-            studentQuestions[questionIndex].answer = answerText.value;
-            studentQuestions[questionIndex].status = 'پاسخ داده';
-            studentQuestions[questionIndex].answerDate = new Date().toLocaleString('fa-IR');
-            localStorage.setItem('chemistryQuestions', JSON.stringify(studentQuestions));
-            
-            alert('✅ پاسخ با موفقیت ذخیره شد!');
-            closeDetailModal();
-            showQuestionsPanel();
-        }
-    }
-    
-    // ارسال واتس‌اپ
-    function sendWhatsApp(phone, questionId) {
-        const answerText = document.getElementById('answerText');
-        if (!answerText || !answerText.value.trim()) {
-            alert('لطفا ابتدا پاسخ را بنویسید.');
-            return;
-        }
-        
-        const cleanPhone = phone.replace(/\D/g, '');
-        const message = `سلام، پاسخ سوال شما در مورد شیمی:\n\n${answerText.value}\n\nبا احترام،\nمدرس شیمی کنکور`;
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappURL = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
-        
-        window.open(whatsappURL, '_blank');
-        saveAnswer(questionId);
-    }
-    
-    // کپی شماره تلفن
-    function copyPhoneNumber(phone) {
-        navigator.clipboard.writeText(phone)
-            .then(() => alert(`شماره ${phone} در کلیپ‌بورد کپی شد.`))
-            .catch(() => alert('خطا در کپی کردن شماره.'));
-    }
-    
-    // حذف سوال
-    function deleteQuestion(id) {
-        if (confirm('⚠️ آیا مطمئن هستید که می‌خواهید این سوال را حذف کنید؟')) {
-            studentQuestions = studentQuestions.filter(q => q.id !== id);
-            localStorage.setItem('chemistryQuestions', JSON.stringify(studentQuestions));
-            
-            if (document.getElementById('questions-modal')) {
-                closeModal();
+
+        // راه‌اندازی آزمون هنگام بارگذاری صفحه
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.getElementById('quiz')) {
+                startTimer();
+                loadQuestion();
             }
             
-            alert('🗑️ سوال با موفقیت حذف شد.');
-            setTimeout(() => showQuestionsPanel(), 300);
-        }
-    }
-    
-    // حذف همه سوالات
-    function clearAllQuestions() {
-        if (confirm('⚠️⚠️⚠️ آیا مطمئن هستید که می‌خواهید ALL سوالات را حذف کنید؟ این عمل غیرقابل بازگشت است!')) {
-            localStorage.removeItem('chemistryQuestions');
-            alert('✅ همه سوالات حذف شدند.');
-            closeModal();
-        }
-    }
-    
-    // خروجی CSV
-    function exportToCSV() {
-        studentQuestions = JSON.parse(localStorage.getItem('chemistryQuestions')) || [];
-        
-        if (studentQuestions.length === 0) {
-            alert('📭 داده‌ای برای خروجی وجود ندارد.');
-            return;
-        }
-        
-        let csv = 'کد,نام,شماره تماس,موضوع,سوال,تاریخ ثبت,وضعیت,پاسخ,تاریخ پاسخ\n';
-        
-        studentQuestions.forEach(q => {
-            const safeQuestion = q.question.replace(/"/g, '""').replace(/\n/g, ' ');
-            const safeAnswer = q.answer ? q.answer.replace(/"/g, '""').replace(/\n/g, ' ') : '';
-            
-            csv += `"${q.id}","${q.name}","${q.phone}","${q.subject}","${safeQuestion}","${q.date}","${q.status}","${safeAnswer}","${q.answerDate || ''}"\n`;
+            // نمایش صفحه اول به طور پیش‌فرض
+            showPage('home');
         });
-        
-        const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        const date = new Date().toISOString().split('T')[0].replace(/-/g, '');
-        a.href = url;
-        a.download = `سوالات_شیمی_${date}.csv`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        alert(`📥 فایل با ${studentQuestions.length} سوال دانلود شد.`);
-    }
-    
-    // بروزرسانی لیست
-    function refreshQuestions() {
-        closeModal();
-        setTimeout(() => showQuestionsPanel(), 300);
-    }
-    
-    // بستن مدال اصلی
-    function closeModal() {
-        const modal = document.getElementById('questions-modal');
-        if (modal) {
-            document.body.removeChild(modal);
-            document.body.style.overflow = 'auto';
-        }
-    }
-    
-    // بستن مدال جزئیات
-    function closeDetailModal() {
-        if (window.currentDetailModal) {
-            document.body.removeChild(window.currentDetailModal);
-            document.body.style.overflow = 'auto';
-        }
-    }
-    
-    // راه‌اندازی سیستم مدیریت
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(createAdminButton, 2000);
-        
-        // نمایش نوتیفیکیشن برای معلم
-        studentQuestions = JSON.parse(localStorage.getItem('chemistryQuestions')) || [];
-        const pendingCount = studentQuestions.filter(q => q.status !== 'پاسخ داده').length;
-        
-        if (pendingCount > 0) {
-            console.log(`🔔 ${pendingCount} سوال در انتظار پاسخ دارید. برای مشاهده، روی دکمه "مدیریت سوالات" کلیک کنید.`);
-        }
-    });
     </script>
 </body>
 </html>
