@@ -2882,4 +2882,499 @@
         });
     </script>
 </body>
+   <!-- این کد را به انتهای <body> قبل از </html> اضافه کنید -->
+
+<!-- مدال مدیریت سوالات -->
+<div class="element-modal" id="questions-modal">
+    <div class="modal-content" style="max-width: 900px;">
+        <button class="close-modal" onclick="closeQuestionsModal()">&times;</button>
+        <div id="questions-modal-content">
+            <!-- محتوای مدال سوالات -->
+        </div>
+    </div>
+</div>
+
+<style>
+    /* استایل اضافی برای سیستم مدیریت سوالات */
+    .questions-management {
+        max-height: 70vh;
+        overflow-y: auto;
+        padding: 15px;
+    }
+    
+    .question-manager-item {
+        background-color: var(--light-blue);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-right: 4px solid var(--accent-orange);
+        transition: var(--transition);
+    }
+    
+    .question-manager-item.answered {
+        border-right-color: var(--accent-green);
+    }
+    
+    .question-manager-item.answered {
+        border-right-color: var(--accent-green);
+    }
+    
+    .question-manager-item.in-progress {
+        border-right-color: var(--accent-yellow);
+    }
+    
+    .question-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    .question-text {
+        background-color: rgba(255,255,255,0.05);
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+        font-size: 0.95rem;
+    }
+    
+    .answer-section {
+        background-color: rgba(100, 255, 218, 0.1);
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+        border-right: 3px solid var(--accent-blue);
+    }
+    
+    .question-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .status-badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    
+    .status-new { background-color: var(--accent-orange); color: white; }
+    .status-answered { background-color: var(--accent-green); color: white; }
+    .status-pending { background-color: var(--accent-yellow); color: #000; }
+    
+    .priority-badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 5px;
+        font-size: 0.7rem;
+        margin-right: 5px;
+    }
+    
+    .priority-high { background-color: var(--accent-red); color: white; }
+    .priority-medium { background-color: var(--accent-yellow); color: #000; }
+    .priority-low { background-color: var(--accent-blue); color: var(--deep-blue); }
+</style>
+
+<script>
+// =================== سیستم مدیریت سوالات ===================
+const studentQuestions = JSON.parse(localStorage.getItem('chemistryQuestions')) || [];
+
+// ایجاد دکمه مدیریت سوالات برای مدرس
+function createQuestionsManagerButton() {
+    if (document.getElementById('questions-manager-btn')) return;
+    
+    const adminBtn = document.createElement('button');
+    adminBtn.id = 'questions-manager-btn';
+    adminBtn.innerHTML = '📋 مدیریت سوالات';
+    adminBtn.style.cssText = `
+        position: fixed;
+        bottom: 80px;
+        left: 20px;
+        background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        z-index: 1000;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(157, 78, 221, 0.3);
+        transition: all 0.3s ease;
+    `;
+    
+    adminBtn.onclick = showQuestionsManager;
+    document.body.appendChild(adminBtn);
+    
+    // مخفی کردن دکمه برای دانش‌آموزان
+    if (currentUser && currentUser.role !== 'teacher') {
+        adminBtn.style.display = 'none';
+    }
+}
+
+// نمایش مدیریت سوالات
+function showQuestionsManager() {
+    if (!currentUser || currentUser.role !== 'teacher') {
+        alert('این بخش فقط برای مدرسین قابل دسترسی است');
+        return;
+    }
+    
+    // بارگذاری سوالات از localStorage
+    const questions = JSON.parse(localStorage.getItem('chemistryQuestions')) || [];
+    
+    let questionsHTML = `
+        <div class="questions-management">
+            <h2 style="color: var(--accent-blue); text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--accent-blue);">
+                📋 مدیریت سوالات دانش‌آموزان
+            </h2>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background-color: var(--light-blue); padding: 15px; border-radius: 10px;">
+                <div>
+                    <span style="color: var(--text-secondary);">تعداد کل سوالات: </span>
+                    <span style="color: var(--accent-blue); font-weight: bold; font-size: 1.2rem;">${questions.length}</span>
+                </div>
+                <div>
+                    <span style="color: var(--text-secondary);">سوالات پاسخ‌داده‌نشده: </span>
+                    <span style="color: var(--accent-red); font-weight: bold;">${questions.filter(q => q.status === 'جدید').length}</span>
+                </div>
+                <button class="btn" onclick="refreshQuestions()" style="background-color: var(--accent-blue);">
+                    <i class="fas fa-sync-alt"></i> به‌روزرسانی
+                </button>
+            </div>
+    `;
+    
+    if (questions.length === 0) {
+        questionsHTML += `
+            <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 20px; color: var(--accent-purple);"></i>
+                <h3>هنوز سوالی ثبت نشده است</h3>
+                <p>دانش‌آموزان می‌توانند سوالات خود را در بخش "رفع اشکال" مطرح کنند.</p>
+            </div>
+        `;
+    } else {
+        // مرتب‌سازی سوالات: اولویت‌بندی بر اساس وضعیت
+        const sortedQuestions = [...questions].sort((a, b) => {
+            const statusOrder = { 'جدید': 1, 'در حال بررسی': 2, 'پاسخ داده': 3 };
+            return statusOrder[a.status] - statusOrder[b.status];
+        });
+        
+        sortedQuestions.forEach((q, index) => {
+            const statusClass = q.status === 'پاسخ داده' ? 'answered' : 
+                              q.status === 'در حال بررسی' ? 'in-progress' : '';
+            
+            const priorityClass = q.priority === 'بالا' ? 'priority-high' :
+                                q.priority === 'متوسط' ? 'priority-medium' : 'priority-low';
+            
+            questionsHTML += `
+                <div class="question-manager-item ${statusClass}" id="question-${q.id}">
+                    <div class="question-info">
+                        <div>
+                            <h4 style="color: var(--accent-blue); margin-bottom: 5px;">${q.subject}</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                                <i class="fas fa-user"></i> ${q.studentName}
+                                <span style="margin-right: 15px;"><i class="fas fa-phone"></i> ${q.phone}</span>
+                                <span><i class="fas fa-calendar"></i> ${q.date}</span>
+                            </p>
+                        </div>
+                        <div style="text-align: left;">
+                            <span class="status-badge status-${q.status === 'پاسخ داده' ? 'answered' : q.status === 'در حال بررسی' ? 'pending' : 'new'}">
+                                ${q.status}
+                            </span>
+                            <br>
+                            <span class="priority-badge ${priorityClass}" style="margin-top: 5px; display: inline-block;">
+                                ${q.priority || 'متوسط'}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="question-text">
+                        <strong>سوال:</strong>
+                        <p style="margin-top: 10px; line-height: 1.6;">${q.question}</p>
+                    </div>
+                    
+                    ${q.answer ? `
+                        <div class="answer-section">
+                            <strong>پاسخ شما (${q.answeredBy}):</strong>
+                            <p style="margin-top: 10px; line-height: 1.6;">${q.answer}</p>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">
+                                <i class="fas fa-calendar"></i> تاریخ پاسخ: ${q.answerDate}
+                            </p>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="question-actions">
+                        ${!q.answer ? `
+                            <button class="btn" onclick="showAnswerForm(${q.id})" style="background-color: var(--accent-green);">
+                                <i class="fas fa-reply"></i> پاسخ دادن
+                            </button>
+                            <button class="btn" onclick="changePriority(${q.id})" style="background-color: var(--accent-orange);">
+                                <i class="fas fa-flag"></i> تغییر اولویت
+                            </button>
+                            <button class="btn" onclick="markAsInProgress(${q.id})" style="background-color: var(--accent-yellow); color: #000;">
+                                <i class="fas fa-clock"></i> در حال بررسی
+                            </button>
+                        ` : `
+                            <button class="btn" onclick="editAnswer(${q.id})" style="background-color: var(--accent-blue);">
+                                <i class="fas fa-edit"></i> ویرایش پاسخ
+                            </button>
+                            <button class="btn" onclick="deleteQuestion(${q.id})" style="background-color: var(--accent-red);">
+                                <i class="fas fa-trash"></i> حذف سوال
+                            </button>
+                        `}
+                        <button class="btn" onclick="contactStudent(${q.id})" style="background-color: var(--accent-purple);">
+                            <i class="fas fa-phone"></i> تماس با دانش‌آموز
+                        </button>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 0.8rem; color: var(--text-muted);">
+                        <span>کد پیگیری: <strong>${q.id}</strong></span>
+                        <span>آخرین به‌روزرسانی: ${q.lastUpdate || q.date}</span>
+                    </div>
+                </div>
+            `;
+        });
+    }
+    
+    questionsHTML += `</div>`;
+    
+    document.getElementById('questions-modal-content').innerHTML = questionsHTML;
+    document.getElementById('questions-modal').style.display = 'flex';
+}
+
+// فرم پاسخ‌گویی به سوال
+function showAnswerForm(questionId) {
+    const question = studentQuestions.find(q => q.id === questionId);
+    if (!question) return;
+    
+    const answerFormHTML = `
+        <div style="background-color: var(--light-blue); padding: 25px; border-radius: 10px; margin-top: 20px;">
+            <h4 style="color: var(--accent-blue); margin-bottom: 15px;">پاسخ به سوال ${question.studentName}</h4>
+            <div style="background-color: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <p><strong>سوال:</strong> ${question.question}</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="answer-text">پاسخ خود را وارد کنید:</label>
+                <textarea id="answer-text" class="form-control" rows="6" placeholder="پاسخ دقیق و کامل خود را وارد کنید..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="answer-attachment">افزودن فایل (اختیاری):</label>
+                <input type="file" id="answer-attachment" class="form-control" accept=".pdf,.jpg,.png,.doc,.docx">
+                <small style="color: var(--text-muted); font-size: 0.8rem;">می‌توانید فایل تصویر یا PDF ضمیمه کنید.</small>
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" onclick="submitAnswer(${questionId})" style="background-color: var(--accent-green); flex: 1;">
+                    <i class="fas fa-paper-plane"></i> ارسال پاسخ
+                </button>
+                <button class="btn" onclick="showQuestionsManager()" style="background-color: var(--accent-red);">
+                    <i class="fas fa-times"></i> انصراف
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('questions-modal-content').innerHTML = answerFormHTML;
+}
+
+// ارسال پاسخ
+function submitAnswer(questionId) {
+    const answerText = document.getElementById('answer-text').value;
+    if (!answerText.trim()) {
+        alert('لطفاً پاسخ را وارد کنید.');
+        return;
+    }
+    
+    const questionIndex = studentQuestions.findIndex(q => q.id === questionId);
+    if (questionIndex !== -1) {
+        studentQuestions[questionIndex].answer = answerText;
+        studentQuestions[questionIndex].status = 'پاسخ داده';
+        studentQuestions[questionIndex].answerDate = new Date().toLocaleString('fa-IR');
+        studentQuestions[questionIndex].answeredBy = currentUser.name;
+        studentQuestions[questionIndex].lastUpdate = new Date().toLocaleString('fa-IR');
+        
+        localStorage.setItem('chemistryQuestions', JSON.stringify(studentQuestions));
+        
+        // ارسال پیام موفقیت
+        alert(`✅ پاسخ با موفقیت برای ${studentQuestions[questionIndex].studentName} ارسال شد!`);
+        
+        // نمایش مجدد لیست سوالات
+        showQuestionsManager();
+        
+        // ارسال ایمیل به دانش‌آموز (در سیستم واقعی)
+        console.log(`پاسخ به ${studentQuestions[questionIndex].studentName} با کد ${questionId} ارسال شد.`);
+    }
+}
+
+// تغییر اولویت سوال
+function changePriority(questionId) {
+    const priorities = ['پایین', 'متوسط', 'بالا'];
+    const currentQuestion = studentQuestions.find(q => q.id === questionId);
+    const currentIndex = priorities.indexOf(currentQuestion.priority || 'متوسط');
+    const nextIndex = (currentIndex + 1) % priorities.length;
+    
+    const questionIndex = studentQuestions.findIndex(q => q.id === questionId);
+    if (questionIndex !== -1) {
+        studentQuestions[questionIndex].priority = priorities[nextIndex];
+        studentQuestions[questionIndex].lastUpdate = new Date().toLocaleString('fa-IR');
+        localStorage.setItem('chemistryQuestions', JSON.stringify(studentQuestions));
+        
+        showQuestionsManager();
+        alert(`اولویت سوال به "${priorities[nextIndex]}" تغییر یافت.`);
+    }
+}
+
+// علامت‌گذاری به عنوان "در حال بررسی"
+function markAsInProgress(questionId) {
+    const questionIndex = studentQuestions.findIndex(q => q.id === questionId);
+    if (questionIndex !== -1) {
+        studentQuestions[questionIndex].status = 'در حال بررسی';
+        studentQuestions[questionIndex].lastUpdate = new Date().toLocaleString('fa-IR');
+        localStorage.setItem('chemistryQuestions', JSON.stringify(studentQuestions));
+        
+        showQuestionsManager();
+        alert('سوال به حالت "در حال بررسی" تغییر یافت.');
+    }
+}
+
+// ویرایش پاسخ
+function editAnswer(questionId) {
+    const question = studentQuestions.find(q => q.id === questionId);
+    if (!question) return;
+    
+    const editFormHTML = `
+        <div style="background-color: var(--light-blue); padding: 25px; border-radius: 10px; margin-top: 20px;">
+            <h4 style="color: var(--accent-blue); margin-bottom: 15px;">ویرایش پاسخ</h4>
+            
+            <div style="background-color: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <p><strong>سوال دانش‌آموز:</strong> ${question.question}</p>
+            </div>
+            
+            <div style="background-color: rgba(100, 255, 218, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <p><strong>پاسخ فعلی:</strong> ${question.answer}</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-answer-text">پاسخ جدید:</label>
+                <textarea id="edit-answer-text" class="form-control" rows="6" placeholder="پاسخ جدید را وارد کنید...">${question.answer}</textarea>
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" onclick="updateAnswer(${questionId})" style="background-color: var(--accent-green); flex: 1;">
+                    <i class="fas fa-save"></i> ذخیره تغییرات
+                </button>
+                <button class="btn" onclick="showQuestionsManager()" style="background-color: var(--accent-red);">
+                    <i class="fas fa-times"></i> انصراف
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('questions-modal-content').innerHTML = editFormHTML;
+}
+
+// به‌روزرسانی پاسخ
+function updateAnswer(questionId) {
+    const answerText = document.getElementById('edit-answer-text').value;
+    if (!answerText.trim()) {
+        alert('لطفاً پاسخ را وارد کنید.');
+        return;
+    }
+    
+    const questionIndex = studentQuestions.findIndex(q => q.id === questionId);
+    if (questionIndex !== -1) {
+        studentQuestions[questionIndex].answer = answerText;
+        studentQuestions[questionIndex].lastUpdate = new Date().toLocaleString('fa-IR');
+        localStorage.setItem('chemistryQuestions', JSON.stringify(studentQuestions));
+        
+        alert('✅ پاسخ با موفقیت به‌روزرسانی شد!');
+        showQuestionsManager();
+    }
+}
+
+// حذف سوال
+function deleteQuestion(questionId) {
+    if (confirm('آیا از حذف این سوال اطمینان دارید؟ این عمل قابل بازگشت نیست.')) {
+        const questionIndex = studentQuestions.findIndex(q => q.id === questionId);
+        if (questionIndex !== -1) {
+            const studentName = studentQuestions[questionIndex].studentName;
+            studentQuestions.splice(questionIndex, 1);
+            localStorage.setItem('chemistryQuestions', JSON.stringify(studentQuestions));
+            
+            alert(`سوال دانش‌آموز ${studentName} حذف شد.`);
+            showQuestionsManager();
+        }
+    }
+}
+
+// تماس با دانش‌آموز
+function contactStudent(questionId) {
+    const question = studentQuestions.find(q => q.id === questionId);
+    if (question && question.phone) {
+        if (confirm(`آیا می‌خواهید با ${question.studentName} تماس بگیرید؟\nشماره: ${question.phone}`)) {
+            // در سیستم واقعی اینجا شماره گیری می‌شود
+            // برای نمونه، نمایش شماره
+            alert(`📞 در حال تماس با ${question.studentName}\nشماره: ${question.phone}\n\nدر سیستم واقعی اینجا تماس برقرار می‌شود.`);
+            
+            // ثبت تاریخ تماس
+            const questionIndex = studentQuestions.findIndex(q => q.id === questionId);
+            if (questionIndex !== -1) {
+                studentQuestions[questionIndex].contactHistory = studentQuestions[questionIndex].contactHistory || [];
+                studentQuestions[questionIndex].contactHistory.push({
+                    date: new Date().toLocaleString('fa-IR'),
+                    type: 'تماس تلفنی',
+                    by: currentUser.name
+                });
+                localStorage.setItem('chemistryQuestions', JSON.stringify(studentQuestions));
+            }
+        }
+    } else {
+        alert('شماره تماس دانش‌آموز موجود نیست.');
+    }
+}
+
+// بستن مدال سوالات
+function closeQuestionsModal() {
+    document.getElementById('questions-modal').style.display = 'none';
+}
+
+// به‌روزرسانی لیست سوالات
+function refreshQuestions() {
+    // بارگذاری مجدد از localStorage
+    const updatedQuestions = JSON.parse(localStorage.getItem('chemistryQuestions')) || [];
+    studentQuestions.length = 0;
+    studentQuestions.push(...updatedQuestions);
+    showQuestionsManager();
+}
+
+// ایجاد دکمه مدیریت سوالات بعد از بارگذاری صفحه
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(createQuestionsManagerButton, 2000);
+    
+    // مخفی/نمایش دکمه بر اساس نقش کاربر
+    if (currentUser && currentUser.role === 'teacher') {
+        const adminBtn = document.getElementById('questions-manager-btn');
+        if (adminBtn) {
+            adminBtn.style.display = 'block';
+        }
+    }
+});
+
+// به‌روزرسانی دکمه وقتی کاربر وارد می‌شود
+function updateNavForUser() {
+    // کد قبلی ناوبری...
+    
+    // به‌روزرسانی دکمه مدیریت سوالات
+    const adminBtn = document.getElementById('questions-manager-btn');
+    if (adminBtn) {
+        if (currentUser && currentUser.role === 'teacher') {
+            adminBtn.style.display = 'block';
+        } else {
+            adminBtn.style.display = 'none';
+        }
+    }
+}
+</script> 
 </html>
